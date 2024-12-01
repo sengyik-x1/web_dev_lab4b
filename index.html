@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books</title>
+</head>
+<body>
+    <h1>Book Details</h1>
+  <div id="output"></div>
+
+  <script>
+    // Fetch JSON data
+    fetch('books.json')
+      .then(response => response.json()) // Parse to json format
+      .then(data => {
+        const books = data.books;
+
+        // Extract and display details
+        const output = document.getElementById('output');
+        const firstBookTitle = `<p><strong>Title of the first book:</strong> ${books[0].title}</p>`;
+        const secondBookAuthor = `<p><strong>Author of the second book:</strong> ${books[1].author}</p>`;
+        const genresSet = new Set(); // Use a Set to store unique genres
+            books.forEach(book => {
+                book.genres.forEach(genre => genresSet.add(genre));
+            });
+        const allGenres = `<p><strong>Genres of all books:</strong> ${Array.from(genresSet)}</p>`;
+
+        output.innerHTML = firstBookTitle + secondBookAuthor + allGenres;
+      })
+      .catch(error => console.error('Error loading JSON:', error));
+  </script>
+</body>
+</html>
